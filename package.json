@@ -1,0 +1,23 @@
+{
+  "name": "muyu-merit",
+  "version": "1.0.0",
+  "description": "電子木魚積功德網頁程式",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "muyu",
+    "merit",
+    "meditation",
+    "web-app"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Microsoft YaHei', '微軟正黑體', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -31,42 +31,46 @@
         }
 
         h1 {
-            color: #fff;
+            color: #ffd700;
             margin-bottom: 20px;
             font-size: 2.5rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5), 2px 2px 4px rgba(0, 0, 0, 0.8);
             animation: glow 2s ease-in-out infinite alternate;
         }
 
         @keyframes glow {
             from {
-                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3), 0 0 10px rgba(255, 255, 255, 0.3);
+                text-shadow: 0 0 10px rgba(255, 215, 0, 0.5), 2px 2px 4px rgba(0, 0, 0, 0.8);
             }
             to {
-                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 255, 255, 0.5);
+                text-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 2px 2px 4px rgba(0, 0, 0, 0.8);
             }
         }
 
         .merit-display {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(20, 20, 20, 0.95);
+            border: 1px solid rgba(255, 215, 0, 0.3);
             padding: 20px 40px;
             border-radius: 20px;
             margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(255, 215, 0, 0.05);
             backdrop-filter: blur(10px);
         }
 
         .merit-label {
-            color: #666;
+            color: #888;
             font-size: 1.2rem;
             margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .merit-count {
-            color: #764ba2;
+            color: #ffd700;
             font-size: 3rem;
             font-weight: bold;
             font-family: 'Courier New', monospace;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
         }
 
         .muyu-container {
@@ -83,16 +87,17 @@
         .muyu {
             width: 200px;
             height: 200px;
-            background: radial-gradient(circle at 30% 30%, #8b4513, #654321);
+            background: radial-gradient(circle at 30% 30%, #2a2a2a, #1a1a1a);
             border-radius: 50% 50% 45% 45%;
             position: relative;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-            border: 3px solid #4a2c17;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8), inset 0 -5px 10px rgba(255, 215, 0, 0.1);
+            border: 3px solid rgba(255, 215, 0, 0.3);
             transition: all 0.1s;
         }
 
         .muyu:hover {
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(255, 215, 0, 0.2);
+            border-color: rgba(255, 215, 0, 0.5);
         }
 
         .muyu::before {
@@ -103,9 +108,10 @@
             transform: translateX(-50%);
             width: 60px;
             height: 60px;
-            background: radial-gradient(circle, #a0522d, #8b4513);
+            background: radial-gradient(circle, #3a3a3a, #2a2a2a);
             border-radius: 50%;
-            border: 2px solid #4a2c17;
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            box-shadow: inset 0 0 10px rgba(255, 215, 0, 0.1);
         }
 
         .muyu::after {
@@ -114,18 +120,19 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            color: #fff;
+            color: #ffd700;
             font-size: 1.5rem;
             font-weight: bold;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5), 2px 2px 4px rgba(0, 0, 0, 0.8);
         }
 
         .ripple {
             position: absolute;
-            border: 2px solid rgba(255, 255, 255, 0.7);
+            border: 2px solid rgba(255, 215, 0, 0.6);
             border-radius: 50%;
             animation: ripple-animation 1s ease-out;
             pointer-events: none;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
         }
 
         @keyframes ripple-animation {
@@ -148,7 +155,7 @@
             font-weight: bold;
             pointer-events: none;
             animation: float-up 2s ease-out forwards;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 2px 2px 4px rgba(0, 0, 0, 0.8);
             z-index: 1000;
         }
 
@@ -164,44 +171,50 @@
         }
 
         .instruction {
-            color: rgba(255, 255, 255, 0.9);
+            color: rgba(255, 215, 0, 0.7);
             margin-top: 30px;
             font-size: 1.1rem;
+            letter-spacing: 1px;
         }
 
         .reset-button {
             margin-top: 20px;
             padding: 12px 30px;
-            background: rgba(255, 255, 255, 0.2);
-            border: 2px solid rgba(255, 255, 255, 0.5);
-            color: #fff;
+            background: rgba(20, 20, 20, 0.8);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            color: #ffd700;
             font-size: 1.1rem;
             border-radius: 30px;
             cursor: pointer;
             transition: all 0.3s;
             backdrop-filter: blur(10px);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .reset-button:hover {
-            background: rgba(255, 255, 255, 0.3);
-            border-color: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 215, 0, 0.1);
+            border-color: rgba(255, 215, 0, 0.6);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 215, 0, 0.2);
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
         }
 
         .achievement {
             position: fixed;
             top: 20px;
             right: -400px;
-            background: linear-gradient(135deg, #ffd700, #ffed4e);
-            color: #333;
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            border: 2px solid rgba(255, 215, 0, 0.5);
+            color: #ffd700;
             padding: 20px 30px;
             border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 215, 0, 0.2);
             font-size: 1.2rem;
             font-weight: bold;
             transition: right 0.5s ease-out;
             z-index: 2000;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
         }
 
         .achievement.show {

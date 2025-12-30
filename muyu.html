@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>電子木魚 - 積功德</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', '微軟正黑體', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #fff;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3), 0 0 10px rgba(255, 255, 255, 0.3);
+            }
+            to {
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 255, 255, 0.5);
+            }
+        }
+
+        .merit-display {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px 40px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .merit-label {
+            color: #666;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .merit-count {
+            color: #764ba2;
+            font-size: 3rem;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+        }
+
+        .muyu-container {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+
+        .muyu-container:active {
+            transform: scale(0.95);
+        }
+
+        .muyu {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle at 30% 30%, #8b4513, #654321);
+            border-radius: 50% 50% 45% 45%;
+            position: relative;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            border: 3px solid #4a2c17;
+            transition: all 0.1s;
+        }
+
+        .muyu:hover {
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .muyu::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, #a0522d, #8b4513);
+            border-radius: 50%;
+            border: 2px solid #4a2c17;
+        }
+
+        .muyu::after {
+            content: '木魚';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .ripple {
+            position: absolute;
+            border: 2px solid rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            animation: ripple-animation 1s ease-out;
+            pointer-events: none;
+        }
+
+        @keyframes ripple-animation {
+            from {
+                width: 0;
+                height: 0;
+                opacity: 1;
+            }
+            to {
+                width: 300px;
+                height: 300px;
+                opacity: 0;
+            }
+        }
+
+        .floating-text {
+            position: absolute;
+            color: #ffd700;
+            font-size: 2rem;
+            font-weight: bold;
+            pointer-events: none;
+            animation: float-up 2s ease-out forwards;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-150px) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        .instruction {
+            color: rgba(255, 255, 255, 0.9);
+            margin-top: 30px;
+            font-size: 1.1rem;
+        }
+
+        .reset-button {
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            color: #fff;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .reset-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.8);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .achievement {
+            position: fixed;
+            top: 20px;
+            right: -400px;
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #333;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: right 0.5s ease-out;
+            z-index: 2000;
+        }
+
+        .achievement.show {
+            right: 20px;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .merit-count {
+                font-size: 2.5rem;
+            }
+
+            .muyu {
+                width: 150px;
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🙏 電子木魚 🙏</h1>
+
+        <div class="merit-display">
+            <div class="merit-label">功德值</div>
+            <div class="merit-count" id="meritCount">0</div>
+        </div>
+
+        <div class="muyu-container" id="muyuContainer">
+            <div class="muyu" id="muyu"></div>
+        </div>
+
+        <p class="instruction">點擊木魚積功德</p>
+
+        <button class="reset-button" id="resetButton">重新開始</button>
+    </div>
+
+    <div class="achievement" id="achievement"></div>
+
+    <script>
+        let meritCount = 0;
+        let clickCount = 0;
+        const meritCountElement = document.getElementById('meritCount');
+        const muyuContainer = document.getElementById('muyuContainer');
+        const muyu = document.getElementById('muyu');
+        const resetButton = document.getElementById('resetButton');
+        const achievement = document.getElementById('achievement');
+
+        const loadMerit = () => {
+            const saved = localStorage.getItem('meritCount');
+            if (saved) {
+                meritCount = parseInt(saved);
+                meritCountElement.textContent = meritCount;
+            }
+        };
+
+        const saveMerit = () => {
+            localStorage.setItem('meritCount', meritCount);
+        };
+
+        const createAudioContext = () => {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+            const playSound = (frequency, duration) => {
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+
+                oscillator.frequency.value = frequency;
+                oscillator.type = 'sine';
+
+                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + duration);
+            };
+
+            return playSound;
+        };
+
+        let playSound = null;
+
+        const showAchievement = (message) => {
+            achievement.textContent = message;
+            achievement.classList.add('show');
+            setTimeout(() => {
+                achievement.classList.remove('show');
+            }, 3000);
+        };
+
+        const checkAchievements = () => {
+            const achievements = [
+                { count: 10, message: '🎉 初心者！功德 +10' },
+                { count: 50, message: '✨ 虔誠信徒！功德 +50' },
+                { count: 100, message: '🌟 功德圓滿！功德 +100' },
+                { count: 500, message: '💫 功德無量！功德 +500' },
+                { count: 1000, message: '🏆 功德大師！功德 +1000' },
+                { count: 5000, message: '👑 功德至尊！功德 +5000' }
+            ];
+
+            achievements.forEach(achievement => {
+                if (meritCount === achievement.count) {
+                    showAchievement(achievement.message);
+                }
+            });
+        };
+
+        const createRipple = (e) => {
+            const ripple = document.createElement('div');
+            ripple.className = 'ripple';
+
+            const rect = muyuContainer.getBoundingClientRect();
+            const x = e.clientX - rect.left - 150;
+            const y = e.clientY - rect.top - 150;
+
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+
+            muyuContainer.appendChild(ripple);
+
+            setTimeout(() => {
+                ripple.remove();
+            }, 1000);
+        };
+
+        const createFloatingText = (e) => {
+            const texts = ['功德+1', '善哉', '阿彌陀佛', '積德', '福報+1', '🙏'];
+            const text = texts[Math.floor(Math.random() * texts.length)];
+
+            const floatingText = document.createElement('div');
+            floatingText.className = 'floating-text';
+            floatingText.textContent = text;
+
+            const rect = muyuContainer.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            floatingText.style.left = x + 'px';
+            floatingText.style.top = y + 'px';
+
+            muyuContainer.appendChild(floatingText);
+
+            setTimeout(() => {
+                floatingText.remove();
+            }, 2000);
+        };
+
+        muyu.addEventListener('click', (e) => {
+            if (!playSound) {
+                playSound = createAudioContext();
+            }
+
+            meritCount++;
+            clickCount++;
+            meritCountElement.textContent = meritCount;
+            saveMerit();
+
+            playSound(200 + Math.random() * 100, 0.3);
+
+            createRipple(e);
+            createFloatingText(e);
+
+            checkAchievements();
+
+            muyu.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                muyu.style.transform = 'scale(1)';
+            }, 100);
+        });
+
+        resetButton.addEventListener('click', () => {
+            if (confirm('確定要重置功德值嗎？')) {
+                meritCount = 0;
+                clickCount = 0;
+                meritCountElement.textContent = meritCount;
+                saveMerit();
+                showAchievement('🔄 功德已重置');
+            }
+        });
+
+        loadMerit();
+
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                muyu.click();
+            }
+        });
+    </script>
+</body>
+</html>
